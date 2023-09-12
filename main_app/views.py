@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
 from .models import Pokemon
 
 
@@ -8,11 +9,14 @@ def home(request):
     return render(request, 'home.html')
 def about(request):
     return render(request, 'about.html')
-def pokemons_index(request):
-    pokemons = Pokemon.objects.all()
-    return render(request, 'pokemons/index.html', {
-        'pokemons': pokemons
-    })
+
+class PokemonList(ListView):
+    model = Pokemon
+    template_name = 'pokemons/index.html'
+    context_object_name = 'pokemons'
+   
+
+
 def pokemons_detail(request, pokemon_id):
     pokemon = Pokemon.objects.get(id=pokemon_id)
     return render(request, 'pokemons/detail.html', {
