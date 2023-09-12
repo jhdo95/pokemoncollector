@@ -2,11 +2,14 @@
 {% block content %}
 <h1>Pokemon Details</h1>
 <div class="card">
-    <a href="/pokemons/{{ pokemon.id }}"
     <div class="card-content">
       <span class="card-title">{{ pokemon.name }}</span>
       <p>Category: {{ pokemon.category }}</p>
       <p>Description: {{ pokemon.description|linebreaks }}</p>
+    </div>
+    <div class="card-action">
+      <a href="{% url 'pokemons_update' pokemon.id %}">Edit</a>
+      <a href="{% url 'pokemons_delete' pokemon.id %}">Delete</a>
     </div>
   </div>
 

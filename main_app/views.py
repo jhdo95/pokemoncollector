@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Pokemon
 
 
@@ -17,3 +18,14 @@ def pokemons_detail(request, pokemon_id):
     return render(request, 'pokemons/detail.html', {
         'pokemon': pokemon
     })
+class PokemonCreate(CreateView):
+    model = Pokemon
+    fields = '__all__'
+
+class PokemonUpdate(UpdateView):
+    model = Pokemon
+    fields = ['description']
+
+class PokemonDelete(DeleteView):
+    model = Pokemon
+    success_url = '/pokemons'
