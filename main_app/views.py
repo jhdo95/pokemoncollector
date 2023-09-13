@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Pokemon
 
 
@@ -15,13 +15,11 @@ class PokemonList(ListView):
     template_name = 'pokemons/index.html'
     context_object_name = 'pokemons'
    
+class PokemonDetail(DetailView):
+    model = Pokemon
+    template_name = 'pokemons/detail.html'
+    context_object_name = 'pokemon'
 
-
-def pokemons_detail(request, pokemon_id):
-    pokemon = Pokemon.objects.get(id=pokemon_id)
-    return render(request, 'pokemons/detail.html', {
-        'pokemon': pokemon
-    })
 class PokemonCreate(CreateView):
     model = Pokemon
     fields = '__all__'
