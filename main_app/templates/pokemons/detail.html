@@ -32,6 +32,51 @@
         </tbody>
       </table>
     </div>
+    <hr>
+    <div class="row">
+      <div class="col s6">
+        <h3>{{ pokemon.name }}'s Items</h3>
+        {% if pokemon.items.count %}
+          {% for item in pokemon.items.all %}
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title"{{ pokemon.name}}></span>
+                <p>Description: {{ item.description }}</p>
+              </div>
+              <div class="card-action">
+                <!-- Add the form to remove the item -->
+                <form action="{% url 'unassoc_item' pokemon.id item.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn red">Remove</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <h5>No Items 😿</h5>
+        {% endif %}
+      </div>
+      <div class="col s6">
+        <h3>Available Items</h3>
+        {% if unassociated_items.count %}
+          {% for item in unassociated_items %}
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">{{ item.name }}</span>
+                <p>Description: {{ item.description }}</p>
+              </div>
+              <div class="card-action">
+                <form action="{% url 'assoc_item' pokemon.id item.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn">Add</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <h5>No Items Available</h5>
+        {% endif %}
+      </div>
   </div>
   <script>
     const dateEl = document.getElementById('id_date');

@@ -10,11 +10,20 @@ SNACKS = (
     ('I', 'Iapapa Berry')
 )
 
+class Item(models.Model):
+    name = models.CharField(max_length=25)
+    description = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name
+    def get_absolute_url(self):
+        return reverse('items_detail', kwargs={'pk': self.id})
 
 class Pokemon(models.Model):
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
+    items = models.ManyToManyField(Item, blank=True)
 
     def __str__(self):
         return f'{self.name} ({self.id})'
